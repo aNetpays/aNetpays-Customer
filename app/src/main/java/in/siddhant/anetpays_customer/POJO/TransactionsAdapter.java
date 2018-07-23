@@ -2,6 +2,7 @@ package in.siddhant.anetpays_customer.POJO;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,32 +16,38 @@ import in.siddhant.anetpays_customer.R;
 
 public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.MyViewHolder>{
     private Context context;
-    private List<Transactions.Associate> TransactionsList;
-    private List<Transactions.Datum> TransactionDate;
+    private List <Transactions.DataEntity> TransactionsList;
 
-    public TransactionsAdapter(Context context, List<Transactions.Associate> TransactionsList, List<Transactions.Datum> TransactionDate){
+    public TransactionsAdapter(Context context, List<Transactions.DataEntity> TransactionsList) {
         this.context = context;
         this.TransactionsList = TransactionsList;
-        this.TransactionDate = TransactionDate;
     }
 
-    public void setTransactionsList(List<Transactions.Associate> transactionsList, List<Transactions.Datum> transactionDate){
+    public void setTransactionsList(List<Transactions.DataEntity> transactionsList){
         this.TransactionsList = transactionsList;
-        this.TransactionDate = transactionDate;
+
         notifyDataSetChanged();
     }
 
     @Override
     public TransactionsAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.recycler_view_transactions, parent, false);
+        Log.d("1", "Loaded View Adapter");
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(TransactionsAdapter.MyViewHolder holder, int position) {
-        holder.associateName.setText(TransactionsList.get(position).getName());
-        holder.transactionDate.setText(TransactionDate.get(position).getTransactionDate());
-        int value = (int)toASCI(TransactionsList.get(position).getName());
+
+        Transactions.DataEntity dataEntity = TransactionsList.get(position);
+
+        holder.associateName.setText(dataEntity.getAssociate().getName());
+        holder.transactionDate.setText(dataEntity.getTransactionDate());
+        holder.transactionID.setText(dataEntity.getTransactionId());
+
+        Log.d("2", "BindViewHolder "+position);
+
+        int value = (int)toASCI(dataEntity.getAssociate().getName());
         holder.materialLetterIcon = new MaterialLetterIcon.Builder(context)
                 .shapeColor(R.color.background_color)
                 .initials(true)
@@ -64,21 +71,26 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
 
     @Override
     public int getItemCount() {
+        if (TransactionsList != null)
+        {
+            return TransactionsList.size();
+        }
         return 0;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView associateName;
         TextView transactionDate;
+        TextView transactionID;
         MaterialLetterIcon materialLetterIcon;
-
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            associateName = (TextView)itemView.findViewById(R.id.nameAssociate);
-            transactionDate = (TextView)itemView.findViewById(R.id.dateTransaction);
-            materialLetterIcon = (MaterialLetterIcon)itemView.findViewById(R.id.icon);
+            associateName = (TextView) itemView.findViewById(R.id.nameAssociate);
+            transactionDate = (TextView) itemView.findViewById(R.id.dateTransaction);
+            transactionID = (TextView) itemView.findViewById(R.id.TransactionID);
+            materialLetterIcon = (MaterialLetterIcon) itemView.findViewById(R.id.icon);
         }
     }
 }

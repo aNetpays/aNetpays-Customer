@@ -137,7 +137,7 @@ public class Login extends Fragment implements View.OnClickListener{
             case R.id.forgot_password:
                 fragmentManager
                         .beginTransaction()
-                        .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+                        .setCustomAnimations(R.anim.left_enter, R.anim.right_out)
                         .replace(R.id.frame, new ForgotPassword(), SharedConstants.Forgot_Password).commit();
                 break;
             case R.id.createAccount:
@@ -232,14 +232,14 @@ public class Login extends Fragment implements View.OnClickListener{
     }
 
     private void hideDialog() {
-        if (progressDialog.isShowing())
+        if (progressDialog.isShowing() && getActivity().getWindow().getDecorView().isShown())
         {
             progressDialog.hide();
         }
     }
 
     private void showDialog(){
-        if (!progressDialog.isShowing())
+        if (!progressDialog.isShowing() && getActivity().getWindow().getDecorView().isShown())
         {
             progressDialog.show();
         }

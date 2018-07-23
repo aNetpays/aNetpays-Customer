@@ -53,12 +53,23 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void replaceFragment(){
-        fragmentManager
-                .beginTransaction()
-                .setCustomAnimations(R.anim.left_enter, R.anim.right_out)
-                .replace(R.id.frame, new Login(), SharedConstants.Login_Fragment)
-                .commit();
+    public void replaceFragment(String Tag) {
+
+        if (Tag.equals("right")) {
+            fragmentManager
+                    .beginTransaction()
+                    .setCustomAnimations(R.anim.left_enter, R.anim.right_out)
+                    .replace(R.id.frame, new Login(), SharedConstants.Login_Fragment)
+                    .commit();
+        }
+        else if (Tag.equals("left")){
+            fragmentManager
+                    .beginTransaction()
+                    .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+                    .replace(R.id.frame, new Login(), SharedConstants.Login_Fragment)
+                    .commit();
+        }
+
     }
 
     @Override
@@ -66,10 +77,10 @@ public class LoginActivity extends AppCompatActivity {
         Fragment ForgotPassword = fragmentManager.findFragmentByTag(SharedConstants.Forgot_Password);
         Fragment SignUpFragment = fragmentManager.findFragmentByTag(SharedConstants.SignUp_Fragment);
         if (ForgotPassword != null){
-            replaceFragment();
+            replaceFragment("left");
         }
         else if (SignUpFragment != null){
-            replaceFragment();
+            replaceFragment("right");
         }
         else
         {

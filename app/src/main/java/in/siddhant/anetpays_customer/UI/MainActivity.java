@@ -40,6 +40,7 @@ import in.siddhant.anetpays_customer.POJO.APIClient;
 import in.siddhant.anetpays_customer.POJO.APIInterface;
 import in.siddhant.anetpays_customer.POJO.User;
 import in.siddhant.anetpays_customer.R;
+import in.siddhant.anetpays_customer.UI.Fragments.FragmentTransaction;
 import in.siddhant.anetpays_customer.Utils.CrossfadeWrapper;
 import in.siddhant.anetpays_customer.Utils.CustomPinActivity;
 import in.siddhant.anetpays_customer.Utils.RuntimePermissionUtil;
@@ -80,7 +81,7 @@ public class MainActivity extends PinCompatActivity{
         checks();
         setContentView(R.layout.main_activity);
         sharedPreferences_edit = getSharedPreferences(PREF_LOGIN, Context.MODE_PRIVATE);
-
+        fragmentManager = getSupportFragmentManager();
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
 
         final IProfile profile = new ProfileDrawerItem()
@@ -115,6 +116,14 @@ public class MainActivity extends PinCompatActivity{
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        if (drawerItem.getIdentifier() == 3){
+                            fragmentManager
+                                    .beginTransaction()
+                                    .replace(R.id.crossfade_content, new FragmentTransaction())
+                                    .addToBackStack(null)
+                                    .commitAllowingStateLoss();
+
+                        }
                         return false;
                     }
                 })

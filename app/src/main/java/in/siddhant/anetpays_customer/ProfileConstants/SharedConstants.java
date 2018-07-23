@@ -8,7 +8,7 @@ public class SharedConstants {
 
     public static final String Login_Fragment = "LoginFragment";
     public static final String SignUp_Fragment = "SignUpFragment";
-    public static final String Forgot_Password = "ForgotPassword";
+    public static final String Forgot_Password = "PasswordReset";
 
     public static  String UNIQUE_ID    = "unique_id";
     public static final String PREF_LOGIN     = "preference-Login";
